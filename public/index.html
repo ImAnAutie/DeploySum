@@ -99,41 +99,15 @@ firebase.auth().onAuthStateChanged(function(user) {
         function signout() {
                 firebase.auth().signOut().then(function() {
                         console.log('Signed Out');
-                        location.href="/legacy/signout/firebase";
+                        location.href="/";
                 }, function(error) {
                         console.error('Sign Out Error', error);
-                        location.href="/legacy/signout/firebase";
+                        location.href="/";
                 });
         };
 </script>
-<script id="page_discountcalculator_template" type="text/template7">
-	<div id="page_discountcalculator_input">
-		<form class="form-horizontal" onsubmit="return false;">
-			<fieldset>
-				<div class="form-group">
-					<label class="col-md-4 control-label" for="page_discountcalculator_fullprice">Full price</label>
-					<div class="col-md-4">
-						<input id="page_discountcalculator_fullprice" name="page_discountcalculator_fullprice" type="number" min="0.01" step="0.01" class="form-control input-md">
-					</div>
-				</div>
-				<div class="form-group">
-					<label class="col-md-4 control-label" for="page_discountcalculator_percentage">Discount %</label>
-					<div class="col-md-4">
-						<button class="btn btn-primary" onclick="page_discountcalculator_discount(10);">10%</button>
-						<button class="btn btn-primary" onclick="page_discountcalculator_discount(20);">20%</button>
-					</div>
-				</div>
-			<fieldset>
-		</form>
-	</div>
-	<div id="page_discountcalculator_output" style="display:none;">
-		<button class="btn btn-primary" onclick="page_discountcalculator_switch_to_input();">Calculate another discount</button>
-		<p>The discounted price for
-			<span class="page_discountcalculator_result_full_price"></span> discounted by
-			<span class="page_discountcalculator_result_percentage"></span>% is <span class="page_discountcalculator_result_discounted_price"></span>
-		</p>
-		<p>The amount discounted is <span class="page_discountcalculator_result_discount_amount"></span></p>
-	</div>
+<script id="page_publishers_template" type="text/template7">
+	A list of publisher accounts should be displayed here
 </script>
 
 <script id="gdpr_privacy_agreement_template" type="text/template7">
@@ -283,17 +257,12 @@ firebase.auth().onAuthStateChanged(function(user) {
 <i class="fa fa-home"></i> <span>Home</span>
 </a>
 </li>
-<li>
-<a href="/discountcalculator" onclick="return onclick_page(this);">
-<i class="fa fa-calculator"></i> <span>Discount calculator</span>
-</a>
-</li>
 
 <li>
-<a href="/legacy/queuetimes">
-<i class="fa fa-clock-o"></i> <span>Queue times</span>
-</a>
-</li>
+	<a href="/publishers" onclick="return onclick_page(this);">
+		<i class="fa fa-pen-alt"></i> <span>Publisher Accounts</span>
+	</a>
+</li>\
 
 <li class="treeview show_if_admin" hidden>
 <a href="#">

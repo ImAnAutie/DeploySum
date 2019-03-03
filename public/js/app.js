@@ -83,9 +83,9 @@ function pushstate(state,title,url,eventonly) {
 			console.log("Loading about page");
 			load_cms_page(appconfig.aboutdocid);
 			break;
-		case "discountcalculator":
-			console.log("Loading discount calculator");
-			set_page_content("Discount Calculator",null,null,"Quickly calculate discounts",Template7.compile($('#page_discountcalculator_template').html())());
+		case "publishers":
+			console.log("Loading Publishers");
+			set_page_content("Publishers",null,null,"Add and manage publisher accounts",Template7.compile($('#page_publishers_template').html())());
 			break;
 		case "":
 			console.log("Loading index page");
