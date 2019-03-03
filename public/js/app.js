@@ -3,11 +3,11 @@ appconfig.app_full_name="DeploySum";
 
 //actually added
 appconfig.notfounddocid="bsWda6MEQNPJ0KdTle7k";
+appconfig.indexdocid="qm4mLHZ4knJykG0fjq1t";
 
 //cms content id for GDPR/Privacy policy
 appconfig.privacydocid="iplPavcsXKPhyMELre4U";
 appconfig.privacypolicyversion="1.0.0";
-appconfig.indexdocid="giApgG7x3OruN0dqRp41";
 appconfig.aboutdocid="ucoDlMCiqVKdKciXNo5V";
 
 
