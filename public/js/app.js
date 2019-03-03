@@ -55,7 +55,7 @@ function onclick_page(atag,authenticatedonly) {
 	if (authenticatedonly) {
 		if (!firebase.auth().currentUser) {
 			signin_required();
-			return;
+			return false;
 		};
 	};
 	url=$(atag).attr('href');
