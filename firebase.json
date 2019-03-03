@@ -15,14 +15,20 @@
       "**/.*",
       "**/node_modules/**"
     ],
-    "rewrites": [
-      {
-        "source": "**",
-        "destination": "/index.html"
-      }
-    ]
-  },
-  "storage": {
-    "rules": "storage.rules"
+	"rewrites": [
+		{
+			"source": "/signin",
+			"destination": "/signin.html"
+		},
+		{
+			"source": "/signout",
+			"destination": "/signout.html"
+		},
+		//this MUST be last
+		{
+			"source": "**",
+			"destination": "/index.html"
+		}
+	]
   }
 }

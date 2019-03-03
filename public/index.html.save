@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+
+<link rel="stylesheet" href="/css/bootstrap.min.css">
+
+<link rel="stylesheet" href="/css/font-awesome.min.css">
+
+<link rel="stylesheet" href="/css/ionicons.min.css">
+
+<link rel="stylesheet" href="/css/adminlte/AdminLTE.min.css">
+
+<link rel="stylesheet" href="/css/adminlte/skins/_all-skins.min.css">
+<link rel="stylesheet" href="/css/global.css">
+
+
+<!--[if lt IE 9]>
+  <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+  <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+  <![endif]-->
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
+
+<link rel="stylesheet" href="/css/dataTables.bootstrap.min.css">
+
+<link href="/css/sweetalert.css" rel="stylesheet" />
+
+<script src="/js/moment-with-locales.js"></script>
+<link rel="stylesheet" href="/css/global.css">
+<link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet" />
+
+<script src="/js/template7.min.js"></script>
+<link href="https://cdn.quilljs.com/1.2.6/quill.snow.css" rel="stylesheet">
+<script src="https://cdn.quilljs.com/1.2.6/quill.min.js"></script>
+<script>
+		appconfig={};
+		appconfig.app_full_name="ParkPlanr";
+		//cms content id for GDPR/Privacy policy
+		appconfig.privacydocid="iplPavcsXKPhyMELre4U";
+		appconfig.privacypolicyversion="1.0.0";
+		appconfig.indexdocid="giApgG7x3OruN0dqRp41";
+	</script>
+<script src="/__/firebase/5.8.2/firebase-app.js"></script>
+<script src="/__/firebase/5.8.2/firebase-auth.js"></script>
+<script src="/__/firebase/5.8.2/firebase-firestore.js"></script>
+<script src="/__/firebase/5.8.2/firebase-functions.js"></script>
+<script src="/__/firebase/init.js"></script>
+<script>
+	var db = firebase.firestore();
+	var functions = firebase.functions();
+</script>
+<script src="https://cdn.firebase.com/libs/firebaseui/3.0.0/firebaseui.js"></script>
+<link type="text/css" rel="stylesheet" href="https://cdn.firebase.com/libs/firebaseui/3.0.0/firebaseui.css" />
+<script>
+firebase.auth().onAuthStateChanged(function(user) {
+	console.log("Auth state changed");
+  if (user) {
+	console.log(user);
+	profile_photo_url=user['photoURL'];
+	console.log(profile_photo_url);
+
+	$('.username_text').text(user.displayName);
+	if (!profile_photo_url) {
+		user.providerData.forEach(function (profile) {
+			console.log("  Photo URL: " + profile.photoURL);
+			if (profile.photoURL) {
+				profile_photo_url=profile.photoURL;
+			};
+		});
+//		user.updateProfile({
+//			photoURL: profile_photo_url
+//		}).then(function() {
+//		}).catch(function(error) {
+//		});
+	};
+	console.log("DONE");
+	if (profile_photo_url) {
+		$('.user_profile_image').attr('src',profile_photo_url);
+	};
+		//lookup user GDPR/privacy policy agreement
+		console.log("Getting user doc");
+		var docRef = db.collection("users").doc(user.uid);
+		docRef.get().then(function(userdoc) {
+			if (userdoc.exists) {
+				console.log("Document data:", userdoc.data());
+				start_gdpr_agreement(user,userdoc);
+			} else {
+				// userdoc.data() will be undefined in this case
+				console.log("No such document! (user)");
+				//default to GDPR compliance false
+				start_gdpr_agreement(user);
+			};
+		}).catch(function(error) {
+			console.log("Error getting document:", error);
+			alert("Sorry something went wrong. (#GDPR check fail)");
+			location.reload();
+		});
+	  }
+});
+</script>
+<script>
+        function signout() {
+                firebase.auth().signOut().then(function() {
+                        console.log('Signed Out');
+                        location.href="/legacy/signout/firebase";
+                }, function(error) {
+                        console.error('Sign Out Error', error);
+                        location.href="/legacy/signout/firebase";
+                });
+        };
+</script>
+<script id="gdpr_privacy_agreement_template" type="text/template7">
+			<p>Hi {{user.displayName}} we just need you to take a quick look at our privacy policy</p>
+			<hr />
+			<div id="gdpr_privacy_agreement_version">{{policy.privacypolicyversion}}</div>
+			<div id="gdpr_privacy_agreement_text">{{policy.html}}</div>
+			<button class="btn btn-success" onclick="gdpr_consent();">I agree</button>
+			<hr />
+		</script>
+<script>
+	function gdpr_consent() {
+		if (firebase.auth().currentUser) {
+			uid=firebase.auth().currentUser.uid;
+			privacypolicyversion=$('#gdpr_privacy_agreement_version').html();
+			console.log(`${uid} consents to privacy policy version ${privacypolicyversion}`);
+			
+		} else {
+			console.log("Not signed in, unable to consent.");
+			location.reload();
+		};
+	};
+			function start_gdpr_agreement(user,userdoc) {
+				if (user.uid!="eoXv1laaiwRhbzFGv5ioekhPJV82") {
+					console.log("User is not gregory, ignoring privacy policy check");
+					return;
+				};
+				if (userdoc.data().privacypolicyversion == appconfig.privacypolicyversion) {
+					console.log("Latest privacy policy accepted");
+					return;
+				};
+
+				$('.box-title').text("GDPR and Privacy policy")
+				$('.content-header').find('h1').find('small').text("Just a few T's and C's")
+				small_html=$('.content-header').find('h1').find('small').wrap('<div/>').parent().html();
+				$('.content-header').find('h1').text("GDPR and Privacy policy");
+				$('.content-header').find('h1').append(small_html);			
+				$('title').text(`${appconfig.app_full_name} | GDPR and Privacy policy`)
+
+				var docRef = db.collection("cms_content").doc(appconfig.privacydocid);
+					docRef.get().then(function(policydoc) {
+						if (policydoc.exists) {
+							console.log("Document data:", policydoc.data());
+							var template = $('#gdpr_privacy_agreement_template').html();
+							var compiledTemplate = Template7.compile(template);
+							var context = {
+								user: user,
+								userdoc: userdoc,
+								policy: policydoc.data()
+							};
+							var html = compiledTemplate(context);
+							$('.box-body').html(html);
+						} else {
+							// policydoc.data() will be undefined in this case
+							console.log("No such document! (policy)");
+						};
+					}).catch(function(error) {
+						console.log("Error getting document:", error);
+						alert("Sorry something went wrong. (#GDPR fetch fail)");
+						location.reload();
+				});
+			};
+		</script>
+<title>ParkPlanr | Welcome!</title>
+</head>
+<body class="hold-transition skin-blue sidebar-mini">
+
+<div class="wrapper">
+<header class="main-header">
+
+<a href="/legacy/site" class="logo" style="">
+
+<span class="logo-mini"><b>P</b>P</span>
+
+<span class="logo-lg"><b>Park</b>Planr</span>
+</a>
+
+<nav class="navbar navbar-static-top" style="">
+
+<a href="#" class="sidebar-toggle" data-toggle="push-menu" role="button">
+<span class="sr-only">Toggle navigation</span>
+<span class="icon-bar"></span>
+<span class="icon-bar"></span>
+<span class="icon-bar"></span>
+</a>
+<div class="navbar-custom-menu" style="">
+<ul class="nav navbar-nav">
+
+<li class="dropdown user user-menu">
+<a href="#" class="dropdown-toggle" data-toggle="dropdown">
+<img src="/img/logo.png" class="user-image user_profile_image" alt="User Image">
+<span class="hidden-xs username_text"></span>
+</a>
+<ul class="dropdown-menu">
+
+<li class="user-header">
+<img src="/img/logo.png" class="img-circle user_profile_image" alt="User Image">
+<p class="username_text"></p>
+</li>
+
+<li class="user-footer">
+<div class="pull-left">
+<a href="/legacy/profile" class="btn btn-default btn-flat">Profile</a>
+</div>
+<div class="pull-right">
+<a class="btn btn-default btn-flat" onclick="signout();">Sign out</a>
+</div>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</nav>
+</header>
+
+<aside class="main-sidebar">
+
+<section class="sidebar">
+
+<div class="user-panel">
+<div class="pull-left image">
+<img src="/img/logo.png" class="img-circle user_profile_image" alt="User Image">
+</div>
+<div class="pull-left info">
+<p><marquee><span class="username_text"></span></marquee></p>
+<a href="#"><i class="fa fa-circle text-success"></i> Online</a>
+</div>
+</div>
+
+
+
+<ul class="sidebar-menu" data-widget="tree">
+<li class="header">Menu</li>
+<li>
+<a href="/legacy/site">
+<i class="fa fa-home"></i> <span>Home</span>
+</a>
+</li>
+<li class="treeview">
+<a href="#">
+<i class="fa fa-ticket"></i> <span>Tickets</span>
+<span class="pull-right-container">
+<i class="fa fa-angle-left pull-right"></i>
+</span>
+</a>
+<ul class="treeview-menu">
+<li><a href="/legacy/tickets/buy"><i class="fa fa-shopping-cart"></i> Buy tickets</a></li>
+</ul>
+</li>
+<li>
+<a href="/legacy/ridecount">
+<i class="fa fa-circle"></i> <span>Ride count</span>
+</a>
+</li>
+<li>
+<a href="/legacy/discountcalculator">
+<i class="fa fa-calculator"></i> <span>Discount calculator</span>
+</a>
+</li>
+
+<li>
+<a href="/legacy/queuetimes">
+<i class="fa fa-clock-o"></i> <span>Queue times</span>
+</a>
+</li>
+
+<li class="show_if_map_vip" hidden>
+<a href="/legacy/hotelcompare">
+<i class="fa fa-hotel"></i> <span>Hotels</span>
+</a>
+</li>
+<li class="treeview show_if_map_vip" hidden>
+<a href="#">
+<i class="fa fa-star"></i> <span>Merlin V.I.P</span>
+<span class="pull-right-container">
+<i class="fa fa-angle-left pull-right"></i>
+</span>
+</a>
+
+<ul class="treeview-menu">
+<li class="treeview">
+<a href="#">
+<i class="fa fa-book"></i> <span>VIP Handbook</span>
+<span class="pull-right-container">
+<i class="fa fa-angle-left pull-right"></i>
+</span>
+</a>
+<ul class="treeview-menu">
+<li><a href="/viphandbook/1"><i class="fa fa-fort-awesome"></i> Alton Towers Resort</a></li>
+<li><a href="/viphandbook/27"><i class="fa fa-book"></i> Chessington World of Adventures Resort</a></li>
+<li><a href="/viphandbook/24"><i class="fa fa-book"></i> Cornish Seal Sanctuary</a></li>
+<li><a href="/viphandbook/5"><i class="fa fa-book"></i> Jurassic Skyline</a></li>
+<li><a href="/viphandbook/2"><i class="fa fa-book"></i> LEGOLAND Discovery Centre Manchester</a></li>
+<li><a href="/viphandbook/8"><i class="fa fa-book"></i> LEGOLAND Windsor Resort</a></li>
+<li><a href="/viphandbook/21"><i class="fa fa-book"></i> Madame Tussauds Blackpool</a></li>
+<li><a href="/viphandbook/20"><i class="fa fa-book"></i> Madame Tussauds London</a></li>
+<li><a href="/viphandbook/22"><i class="fa fa-book"></i> SEA LIFE Birmingham</a></li>
+<li><a href="/viphandbook/10"><i class="fa fa-book"></i> SEA LIFE Blackpool</a></li>
+<li><a href="/viphandbook/12"><i class="fa fa-book"></i> SEA LIFE Brighton</a></li>
+<li><a href="/viphandbook/15"><i class="fa fa-book"></i> SEA LIFE Great Yarmouth</a></li>
+<li><a href="/viphandbook/13"><i class="fa fa-book"></i> SEA LIFE Hunstanton</a></li>
+<li><a href="/viphandbook/11"><i class="fa fa-book"></i> SEA LIFE Loch Lomond & Oban</a></li>
+<li><a href="/viphandbook/19"><i class="fa fa-book"></i> SEA LIFE London</a></li>
+<li><a href="/viphandbook/28"><i class="fa fa-book"></i> SEA LIFE Manchester</a></li>
+<li><a href="/viphandbook/14"><i class="fa fa-book"></i> SEA LIFE Scarborough</a></li>
+<li><a href="/viphandbook/9"><i class="fa fa-book"></i> Shrek's Adventure! London</a></li>
+<li><a href="/viphandbook/26"><i class="fa fa-book"></i> The Blackpool Tower</a></li>
+<li><a href="/viphandbook/4"><i class="fa fa-book"></i> The Blackpool Tower Circus</a></li>
+<li><a href="/viphandbook/17"><i class="fa fa-book"></i> The Blackpool Tower Dungeon</a></li>
+<li><a href="/viphandbook/7"><i class="fa fa-book"></i> The Coca-Cola London Eye</a></li>
+<li><a href="/viphandbook/16"><i class="fa fa-book"></i> The Edinburgh Dungeon</a></li>
+<li><a href="/viphandbook/25"><i class="fa fa-book"></i> The London Dungeon</a></li>
+<li><a href="/viphandbook/18"><i class="fa fa-book"></i> The York Dungeon</a></li>
+<li><a href="/viphandbook/3"><i class="fa fa-book"></i> THORPE PARK Resort</a></li>
+<li><a href="/viphandbook/6"><i class="fa fa-book"></i> Warwick Castle</a></li>
+<li><a href="/viphandbook/23"><i class="fa fa-book"></i> Weymouth SEA LIFE Adventure Park</a></li>
+</ul>
+</li>
+
+<li><a href="/vip/tellus"><i class="fa fa-envelope"></i> Tell us your coming</a></li>
+</ul>
+</li>
+<li class="treeview show_if_admin" hidden>
+<a href="#">
+<i class="fa fa-gear"></i> <span>Administration</span>
+<span class="pull-right-container">
+<i class="fa fa-angle-left pull-right"></i>
+</span>
+</a>
+<ul class="treeview-menu">
+<li><a href="/admin/firebasemigration/graphs"><i class="fa fa-pie-chart"></i> Firebase migration</a></li>
+<li><a href="/admin/parks"><i class="fa fa-compass"></i> Parks</a></li>
+<li><a href="/admin/rides"><i class="fa fa-circle-o"></i> Rides</a></li>
+<li><a href="/admin/ridetags"><i class="fa fa-tags"></i> Ride tags</a></li>
+<li><a href="/admin/users"><i class="fa fa-users"></i> Users</a></li>
+<li class="treeview">
+<a href="#">
+<i class="fa fa-gear"></i> <span>Queue scrapers*</span>
+<span class="pull-right-container">
+<i class="fa fa-angle-left pull-right"></i>
+</span>
+</a>
+<ul class="treeview-menu">
+<li><a href="/admin/queuescrapers/ridetimescouk/"><i class="fa fa-fort-awesome"></i> Ridetimes.co.uk</a></li>
+</ul>
+</li>
+<li class="treeview">
+<a href="#">
+<i class="fa fa-sitemap"></i> <span>CMS</span>
+<span class="pull-right-container">
+<i class="fa fa-angle-left pull-right"></i>
+</span>
+</a>
+<ul class="treeview-menu">
+<li><a href="/admin/cms"><i class="fa fa-sitemap"></i> Content</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+	<a href="/legacy/app">
+		<i class="fa fa-question"></i> <span>Merlin V.I.P specific features</span>
+	</a>
+</li>
+<li>
+	<a href="/legacy/about">
+		<i class="fa fa-question"></i> <span>About</span>
+	</a>
+</li>
+</ul>
+</section>
+
+</aside>
+
+<div class="content-wrapper">
+
+<section class="content-header">
+<h1>
+Welcome to ParkPlanr
+<small>it all starts here</small>
+</h1>
+<ol class="breadcrumb">
+<li class="active"><a href="/legacy/site"><i class="fa fa-home"></i> Home</a></li>
+</ol>
+</section>
+
+<section class="content">
+
+<div class="box" id="main_box">
+	<div class="box-header with-border">
+		<h3 class="box-title">Welcome!</h3>
+	</div>
+	<div class="box-body">Just loading that for you</div>
+</section>
+
+</div>
+
+<footer class="main-footer">
+<div class="pull-right hidden-xs">
+<b>Firebase enviroment</b>
+</div>
+<strong>Copyright &copy; 2017-2019 <a href="https://okonetwork.org.uk">The Oko Network</a>.</strong> All rights
+reserved.
+</footer>
+</div>
+
+
+<script src="/js/jquery.min.js"></script>
+<script src="/js/jquery-ui.min.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/jquery.slimscroll.min.js"></script>
+<script src="/js/fastclick.js"></script>
+<script src="/js/adminlte/adminlte.min.js"></script>
+<script src="/js/adminlte/demo.js"></script>
+<script>
+  $(document).ready(function () {
+    $('.sidebar-menu').tree()
+  })
+</script>
+
+<script src="/js/jquery.dataTables.min.js"></script>
+<script src="/js/dataTables.bootstrap.min.js"></script>
+<script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
+<script src="/js/sweetalert.min.js"></script>
+<script src="/js/qrcode.min.js"></script>
+<script src="/js/book_tickets.js?cachebuster6"></script>
+<script src="/js/app.js"></script>
+<script>
+	function signin_redirect() {
+		location.href="/signin";
+	};
+
+	function signin_required() {
+		$('#signin_required_modal').modal();
+	};
+</script>
+<div class="modal" tabindex="-1" role="dialog" id="signin_required_modal">
+<div class="modal-dialog" role="document">
+<div class="modal-content">
+<div class="modal-header">
+<h5 class="modal-title">Account required</h5>
+<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+<span aria-hidden="true">&times;</span>
+</button>
+</div>
+<div class="modal-body">
+<p>To continue please sign in to your ParkPlanr account</p>
+<p>If you dont have one, you can create one by clicking <button type="button" class="btn btn-primary" onclick="signin_redirect();">Sign in/up</button> then following the instructions</p>
+<p>It's 100% free to create an account, with a ParkPlanr account you can</p>
+<p>Keep track of what rides you go on, receive queue time alerts for your favourite rides and more!</p>
+<br></br>
+<p>If you have an account for the ParkPlanr Android app you can use the same account here</p>
+</div>
+<div class="modal-footer">
+<button type="button" class="btn btn-primary" onclick="signin_redirect();">Sign in/up</button>
+<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+</div>
+</div>
+</div>
+</div>
+</body>
+</html>
