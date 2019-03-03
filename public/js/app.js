@@ -40,7 +40,9 @@ function load_cms_page(docid) {
 			set_page_content(pagedoc.data().title,null,null,"",pagedoc.data().html);
 		} else {
 			// pagedoc.data() will be undefined in this case
-			console.log("No such page document!");
+			console.log(`No such page document for ID: ${docid}`);
+			//loading 404
+                        load_cms_page(appconfig.notfounddocid);
 		};
 	}).catch(function(error) {
 		console.log("Error getting page document:", error);
