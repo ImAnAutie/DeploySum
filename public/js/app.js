@@ -1,5 +1,5 @@
 appconfig={};
-appconfig.app_full_name="ParkPlanr";
+appconfig.app_full_name="DeploySum";
 //cms content id for GDPR/Privacy policy
 appconfig.privacydocid="iplPavcsXKPhyMELre4U";
 appconfig.privacypolicyversion="1.0.0";
@@ -123,23 +123,3 @@ firebase.auth().onAuthStateChanged(function(user) {
 		});
 	};
 });
-
-
-function page_discountcalculator_discount(percentage) {
-	full_price=$('#page_discountcalculator_fullprice').val();
-	discount_amount=((full_price/100)*percentage).toFixed(2);
-	discounted_price=(full_price-discount_amount).toFixed(2);
-	console.log(full_price,discount_amount,discounted_price);
-
-	$('.page_discountcalculator_result_full_price').text(full_price);
-	$('.page_discountcalculator_result_percentage').text(percentage);
-	$('.page_discountcalculator_result_discounted_price').text(discounted_price);
-	$('.page_discountcalculator_result_discount_amount').text(discount_amount);
-	$('#page_discountcalculator_input').hide();
-	$('#page_discountcalculator_output').show();
-};
-
-function page_discountcalculator_switch_to_input() {
-	$('#page_discountcalculator_input').show();
-	$('#page_discountcalculator_output').hide();
-};

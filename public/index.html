@@ -208,7 +208,7 @@ firebase.auth().onAuthStateChanged(function(user) {
 				});
 			};
 		</script>
-<title>ParkPlanr | Welcome!</title>
+<title>DeploySum | Welcome!</title>
 </head>
 <body class="hold-transition skin-blue sidebar-mini">
 
@@ -217,9 +217,9 @@ firebase.auth().onAuthStateChanged(function(user) {
 
 <a href="/" class="logo" style="">
 
-<span class="logo-mini"><b>P</b>P</span>
+<span class="logo-mini"><b>D</b>S</span>
 
-<span class="logo-lg"><b>Park</b>Planr</span>
+<span class="logo-lg"><b>Deploy</b>Sum</span>
 </a>
 
 <nav class="navbar navbar-static-top" style="">
@@ -283,24 +283,6 @@ firebase.auth().onAuthStateChanged(function(user) {
 <i class="fa fa-home"></i> <span>Home</span>
 </a>
 </li>
-<li class="treeview">
-<a href="#">
-<i class="fa fa-ticket"></i> <span>Tickets</span>
-<span class="pull-right-container">
-<i class="fa fa-angle-left pull-right"></i>
-</span>
-</a>
-<ul class="treeview-menu">
-<li><a href="/legacy/tickets/buy"><i class="fa fa-shopping-cart"></i> Buy tickets</a></li>
-</ul>
-</li>
-
-<li class="show_if_signed_in hidden">
-<a href="/legacy/ridecount">
-<i class="fa fa-circle"></i> <span>Ride count</span>
-</a>
-</li>
-
 <li>
 <a href="/discountcalculator" onclick="return onclick_page(this);">
 <i class="fa fa-calculator"></i> <span>Discount calculator</span>
@@ -313,63 +295,6 @@ firebase.auth().onAuthStateChanged(function(user) {
 </a>
 </li>
 
-<li>
-<a href="/legacy/hotelcompare">
-<i class="fa fa-hotel"></i> <span>Hotels</span>
-</a>
-</li>
-
-<li class="treeview show_if_map_vip" hidden>
-<a href="#">
-<i class="fa fa-star"></i> <span>Merlin V.I.P</span>
-<span class="pull-right-container">
-<i class="fa fa-angle-left pull-right"></i>
-</span>
-</a>
-
-<ul class="treeview-menu">
-<li class="treeview">
-<a href="#">
-<i class="fa fa-book"></i> <span>VIP Handbook</span>
-<span class="pull-right-container">
-<i class="fa fa-angle-left pull-right"></i>
-</span>
-</a>
-<ul class="treeview-menu">
-<li><a href="/viphandbook/1"><i class="fa fa-fort-awesome"></i> Alton Towers Resort</a></li>
-<li><a href="/viphandbook/27"><i class="fa fa-book"></i> Chessington World of Adventures Resort</a></li>
-<li><a href="/viphandbook/24"><i class="fa fa-book"></i> Cornish Seal Sanctuary</a></li>
-<li><a href="/viphandbook/5"><i class="fa fa-book"></i> Jurassic Skyline</a></li>
-<li><a href="/viphandbook/2"><i class="fa fa-book"></i> LEGOLAND Discovery Centre Manchester</a></li>
-<li><a href="/viphandbook/8"><i class="fa fa-book"></i> LEGOLAND Windsor Resort</a></li>
-<li><a href="/viphandbook/21"><i class="fa fa-book"></i> Madame Tussauds Blackpool</a></li>
-<li><a href="/viphandbook/20"><i class="fa fa-book"></i> Madame Tussauds London</a></li>
-<li><a href="/viphandbook/22"><i class="fa fa-book"></i> SEA LIFE Birmingham</a></li>
-<li><a href="/viphandbook/10"><i class="fa fa-book"></i> SEA LIFE Blackpool</a></li>
-<li><a href="/viphandbook/12"><i class="fa fa-book"></i> SEA LIFE Brighton</a></li>
-<li><a href="/viphandbook/15"><i class="fa fa-book"></i> SEA LIFE Great Yarmouth</a></li>
-<li><a href="/viphandbook/13"><i class="fa fa-book"></i> SEA LIFE Hunstanton</a></li>
-<li><a href="/viphandbook/11"><i class="fa fa-book"></i> SEA LIFE Loch Lomond & Oban</a></li>
-<li><a href="/viphandbook/19"><i class="fa fa-book"></i> SEA LIFE London</a></li>
-<li><a href="/viphandbook/28"><i class="fa fa-book"></i> SEA LIFE Manchester</a></li>
-<li><a href="/viphandbook/14"><i class="fa fa-book"></i> SEA LIFE Scarborough</a></li>
-<li><a href="/viphandbook/9"><i class="fa fa-book"></i> Shrek's Adventure! London</a></li>
-<li><a href="/viphandbook/26"><i class="fa fa-book"></i> The Blackpool Tower</a></li>
-<li><a href="/viphandbook/4"><i class="fa fa-book"></i> The Blackpool Tower Circus</a></li>
-<li><a href="/viphandbook/17"><i class="fa fa-book"></i> The Blackpool Tower Dungeon</a></li>
-<li><a href="/viphandbook/7"><i class="fa fa-book"></i> The Coca-Cola London Eye</a></li>
-<li><a href="/viphandbook/16"><i class="fa fa-book"></i> The Edinburgh Dungeon</a></li>
-<li><a href="/viphandbook/25"><i class="fa fa-book"></i> The London Dungeon</a></li>
-<li><a href="/viphandbook/18"><i class="fa fa-book"></i> The York Dungeon</a></li>
-<li><a href="/viphandbook/3"><i class="fa fa-book"></i> THORPE PARK Resort</a></li>
-<li><a href="/viphandbook/6"><i class="fa fa-book"></i> Warwick Castle</a></li>
-<li><a href="/viphandbook/23"><i class="fa fa-book"></i> Weymouth SEA LIFE Adventure Park</a></li>
-</ul>
-</li>
-
-<li><a href="/vip/tellus"><i class="fa fa-envelope"></i> Tell us your coming</a></li>
-</ul>
-</li>
 <li class="treeview show_if_admin" hidden>
 <a href="#">
 <i class="fa fa-gear"></i> <span>Administration</span>
@@ -408,11 +333,6 @@ firebase.auth().onAuthStateChanged(function(user) {
 </ul>
 </li>
 <li>
-	<a href="/legacy/app">
-		<i class="fa fa-star"></i> <span>Merlin V.I.P specific features</span>
-	</a>
-</li>
-<li>
 	<a href="/about" onclick="return onclick_page(this);">
 		<i class="fa fa-question"></i> <span>About</span>
 	</a>
@@ -426,7 +346,7 @@ firebase.auth().onAuthStateChanged(function(user) {
 
 <section class="content-header">
 <h1>
-Welcome to ParkPlanr
+Welcome to DeploySum
 <small>it all starts here</small>
 </h1>
 <ol class="breadcrumb">
@@ -451,7 +371,7 @@ Welcome to ParkPlanr
 <div class="pull-right hidden-xs">
 <b>Firebase enviroment</b>
 </div>
-<strong>Copyright &copy; 2017-2019 <a href="https://okonetwork.org.uk">The Oko Network</a>.</strong> All rights
+<strong>Copyright &copy; 2019-2019 <a href="https://okonetwork.org.uk">The Oko Network</a>.</strong> All rights
 reserved.
 </footer>
 </div>
@@ -476,7 +396,6 @@ reserved.
 <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
 <script src="/js/sweetalert.min.js"></script>
 <script src="/js/qrcode.min.js"></script>
-<script src="/js/book_tickets.js?cachebuster6"></script>
 <script src="/js/app.js"></script>
 <script>
 	function signin_redirect() {
@@ -497,12 +416,14 @@ reserved.
 </button>
 </div>
 <div class="modal-body">
-<p>To continue please sign in to your ParkPlanr account</p>
+<p>To continue please sign in to your DeploySum account</p>
 <p>If you dont have one, you can create one by clicking <button type="button" class="btn btn-primary" onclick="signin_redirect();">Sign in/up</button> then following the instructions</p>
-<p>It's 100% free to create an account, with a ParkPlanr account you can</p>
-<p>Keep track of what rides you go on, receive queue time alerts for your favourite rides and more!</p>
+<p>It's 100% free to create an account, with a DeploySum account you can</p>
+<p>Manage store listings,builds and deployments for your apps.</p>
 <br></br>
-<p>If you have an account for the ParkPlanr Android app you can use the same account here</p>
+<!-- 
+	<p>If you have an account for the DeploySum Android app you can use the same account here</p>
+-->
 </div>
 <div class="modal-footer">
 <button type="button" class="btn btn-primary" onclick="signin_redirect();">Sign in/up</button>
