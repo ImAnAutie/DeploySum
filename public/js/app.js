@@ -51,7 +51,13 @@ function load_cms_page(docid) {
 	});
 };
 
-function onclick_page(atag) {
+function onclick_page(atag,authenticatedonly) {
+	if (authenticatedonly) {
+		if (firebase.auth().currentUser) {
+			signin_required();
+			return;
+		};
+	};
 	url=$(atag).attr('href');
 	console.log(url);
 	pushstate(null,appconfig.app_full_name,url,false);
