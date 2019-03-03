@@ -4,11 +4,11 @@ appconfig.app_full_name="DeploySum";
 //actually added
 appconfig.notfounddocid="bsWda6MEQNPJ0KdTle7k";
 appconfig.indexdocid="qm4mLHZ4knJykG0fjq1t";
+appconfig.aboutdocid="Ah7Ha5l6AbiuqMLX6o0Z";
 
 //cms content id for GDPR/Privacy policy
 appconfig.privacydocid="iplPavcsXKPhyMELre4U";
 appconfig.privacypolicyversion="1.0.0";
-appconfig.aboutdocid="ucoDlMCiqVKdKciXNo5V";
 
 
 window.addEventListener("popstate", function(event){
