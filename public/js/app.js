@@ -120,6 +120,10 @@ firebase.auth().onAuthStateChanged(function(user) {
 	if (user) {
 		console.log("Signed in!");
 
+
+		$('.username_text').text(user.displayName);
+		$('.user_profile_image').attr('src',firebase.auth().currentUser.photoURL);
+
 		$('.show_if_signed_in').show();
 		firebase.auth().currentUser.getIdTokenResult().then((idTokenResult) => {
 			// Confirm the user is an Admin.
