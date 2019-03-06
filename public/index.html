@@ -208,28 +208,33 @@ firebase.auth().onAuthStateChanged(function(user) {
 <div class="navbar-custom-menu" style="">
 <ul class="nav navbar-nav">
 
-<li class="dropdown user user-menu">
-<a href="#" class="dropdown-toggle" data-toggle="dropdown">
-<img src="/img/logo.png" class="user-image user_profile_image" alt="User Image">
-<span class="hidden-xs username_text"></span>
-</a>
-<ul class="dropdown-menu">
 
-<li class="user-header">
-<img src="/img/logo.png" class="img-circle user_profile_image" alt="User Image">
-<p class="username_text"></p>
+<li class="user user-menu show_if_not_signed_in">
+	<a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">Sign in/up</a>
 </li>
 
-<li class="user-footer">
-<div class="pull-left">
-<a href="/legacy/profile" class="btn btn-default btn-flat">Profile</a>
-</div>
-<div class="pull-right">
-<a class="btn btn-default btn-flat" onclick="signout();">Sign out</a>
-</div>
+<li class="dropdown user user-menu show_if_signed_in">
+	<a href="#" class="dropdown-toggle" data-toggle="dropdown">
+		<img src="/img/logo.png" class="user-image user_profile_image" alt="User Image">
+		<span class="hidden-xs username_text"></span>
+	</a>
+	<ul class="dropdown-menu">
+		<li class="user-header">
+			<img src="/img/logo.png" class="img-circle user_profile_image" alt="User Image">
+			<p class="username_text"></p>
+		</li>
+
+		<li class="user-footer">
+			<div class="pull-left">
+				<a href="/legacy/profile" class="btn btn-default btn-flat">Profile</a>
+			</div>
+			<div class="pull-right">
+				<a class="btn btn-default btn-flat" onclick="signout();">Sign out</a>
+			</div>
+		</li>
+	</ul>
 </li>
-</ul>
-</li>
+
 </ul>
 </div>
 </nav>

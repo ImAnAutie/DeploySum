@@ -114,17 +114,18 @@ $(document).ready(function() {
 
 firebase.auth().onAuthStateChanged(function(user) {
 	$('.show_if_signed_in').hide();
+	$('.show_if_not_signed_in').show();
 	$('.show_if_admin').hide();
 	$('.show_if_map_vip').hide();
 
 	if (user) {
 		console.log("Signed in!");
 
-
 		$('.username_text').text(user.displayName);
 		$('.user_profile_image').attr('src',firebase.auth().currentUser.photoURL);
 
 		$('.show_if_signed_in').show();
+		$('.show_if_not_signed_in').hide();
 		firebase.auth().currentUser.getIdTokenResult().then((idTokenResult) => {
 			// Confirm the user is an Admin.
 			if (!!idTokenResult.claims.admin) {
