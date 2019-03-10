@@ -16,7 +16,7 @@ window.addEventListener("popstate", function(event){
 	pushstate(event.state,"",location.href,true);
 });
 
-function set_page_content(title,h1title,boxtitle,small,html,box-right-html) {
+function set_page_content(title,h1title,boxtitle,small,html,box_right_html) {
 	$('.box-right').empty();
 
 	if (!h1title) {
@@ -32,7 +32,7 @@ function set_page_content(title,h1title,boxtitle,small,html,box-right-html) {
 	$('.content-header').find('h1').text(h1title);
 	$('.content-header').find('h1').append(small_html);
 	$('#main_box').find('.box-body').html(html);
-	$('#main_box').find('.box-right').html(box-right-html);
+	$('#main_box').find('.box-right').html(box_right_html);
 };
 
 function load_cms_page(docid) {
