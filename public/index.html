@@ -209,8 +209,8 @@ firebase.auth().onAuthStateChanged(function(user) {
 <ul class="nav navbar-nav">
 
 
-<li class="user user-menu show_if_not_signed_in">
-	<a href="/signin" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">Sign in/up</a>
+<li class="user user-menu show_if_not_signed_in" onclick="signin();">
+	<a onclick="signin();" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">Sign in/up</a>
 </li>
 
 <li class="dropdown user user-menu show_if_signed_in">

@@ -140,3 +140,7 @@ firebase.auth().onAuthStateChanged(function(user) {
 		});
 	};
 });
+
+function signin() {
+	location=href="/signin";
+};

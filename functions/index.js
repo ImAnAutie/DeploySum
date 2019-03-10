@@ -12,7 +12,6 @@ sgMail.setApiKey(SENDGRID_API_KEY);
 
 exports.UserCreated = functions.auth.user().onCreate((user) => {
 	return db.collection("users").doc(user.uid).set({
-		public: false,
 		privacypolicyversion: "1.0.0"
 	}).then(function() {
 		console.log("User document created");
